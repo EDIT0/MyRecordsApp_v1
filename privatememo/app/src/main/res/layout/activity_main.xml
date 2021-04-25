@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+        <variable
+            name="MainViewModel"
+            type="com.privatememo.j.viewmodel.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.bottombar.MainActivity"
+        android:orientation="vertical"
+        android:background="#83EEF0F1">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9.2"
+            android:id="@+id/framelayout" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            app:menu="@menu/toolbar_item"
+            android:id="@+id/bottom_tab"
+            app:itemTextColor="#000000"
+            app:labelVisibilityMode="unlabeled"/>
+
+    </LinearLayout>
+
+</layout>

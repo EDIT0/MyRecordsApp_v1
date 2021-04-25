@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="CategoryInfo2Model"
+            type="com.privatememo.j.datamodel.CategoryInfo.CategoryInfo2" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_margin="15dp">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/cateimage"
+                        category_rcv_image="@{CategoryInfo2Model.catepicPath}"
+                        error="@{@drawable/ic_baseline_block_24}"/>
+
+                </LinearLayout>
+                <!--<ImageView
+                    android:layout_margin="15dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    android:id="@+id/cateimage"
+                    category_rcv_image="@{CategoryInfo2Model.catepicPath}"
+                    error="@{@drawable/ic_baseline_block_24}"/>-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cateTitle"
+                        android:textStyle="bold"
+                        android:text="@{CategoryInfo2Model.catename}"
+                        android:layout_margin="7dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cateContent"
+                        android:text="@{CategoryInfo2Model.explanation}"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="bottom"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</layout>

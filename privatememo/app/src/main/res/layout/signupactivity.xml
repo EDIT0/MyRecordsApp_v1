@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="SignViewModel"
+            type="com.privatememo.j.viewmodel.SignUpViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.login.SignUpActivity"
+        android:orientation="vertical"
+        android:background="#83EEF0F1">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="match_parent"
+                    android:id="@+id/backbutton"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_baseline_arrow_back_24" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="7"
+                    android:layout_height="match_parent"
+                    android:text="SignUp"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1.5"
+                    android:layout_height="match_parent"
+                    android:id="@+id/makeid"
+                    android:text="확인"
+                    android:textSize="12dp"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:onClick="@{()-> SignViewModel.completeButton()}"/>
+
+            </LinearLayout>
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_weight="7"
+                        android:layout_height="?attr/actionBarSize"
+                        android:hint="E-mail"
+                        android:id="@+id/email"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:backgroundTint="#83D1D5D6"
+                        android:text="@={SignViewModel.email}"
+                        android:focusable="@{SignViewModel.emailStatus ? true : false}"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="3"
+                        android:layout_height="?attr/actionBarSize"
+                        android:text="중복확인"
+                        android:id="@+id/checkemail"
+                        android:onClick="@{() -> SignViewModel.duplicateButton()}"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:singleLine="true"
+                    android:id="@+id/emailComment"/>
+
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:text="인증번호 받기"
+                    android:id="@+id/check"
+                    android:clickable="@{SignViewModel.email_certificate ? true : false}"
+                    android:onClick="@{()->SignViewModel.checkButton()}"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:hint="인증번호 입력"
+                    android:id="@+id/checknumber"
+                    android:singleLine="true"
+                    android:text="@={SignViewModel.checkNum}"
+                    android:backgroundTint="#83D1D5D6"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:hint="비밀번호"
+                    android:id="@+id/password"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:text="@={SignViewModel.password}"
+                    android:maxLength="25"
+                    android:backgroundTint="#83D1D5D6"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#7D8081"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="프로필"
+                        android:paddingRight="30dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="@{SignViewModel.profileComment}"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:hint="닉네임"
+                    android:id="@+id/nickname"
+                    android:singleLine="true"
+                    android:text="@={SignViewModel.nickname}"
+                    android:maxLength="25"
+                    android:backgroundTint="#83D1D5D6"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:hint="Motto / ex)좌우명"
+                    android:id="@+id/motto"
+                    android:gravity="start"
+                    android:text="@={SignViewModel.motto}"
+                    android:maxLength="250"
+                    android:backgroundTint="#83D1D5D6"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/imageviewround"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_add_circle_outline_24"
+                    android:id="@+id/picture" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

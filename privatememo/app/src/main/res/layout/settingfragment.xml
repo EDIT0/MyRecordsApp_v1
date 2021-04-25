@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bottombar.setting.SettingFragment"
+    android:id="@+id/settingfrag"
+    android:orientation="vertical"
+    android:background="#83EEF0F1">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="10">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="10"
+                android:layout_height="match_parent"
+                android:text="Setting"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/ic_baseline_manage_accounts_24"
+            android:text="프로필 관리"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/profile"
+            android:gravity="start|center_vertical"
+            android:backgroundTint="#83EEF0F1"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_text_fields_24"
+            android:text="글씨크기 변경"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/changeTextSize"
+            android:gravity="start|center_vertical"
+            android:backgroundTint="#83EEF0F1"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_font_download_24"
+            android:text="폰트"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/changeFont"
+            android:gravity="start|center_vertical"
+            android:backgroundTint="#83EEF0F1"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_logout_24"
+            android:text="로그아웃"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/logout"
+            android:gravity="start|center_vertical"
+            android:backgroundTint="#83EEF0F1"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_trending_down_24"
+            android:text="회원탈퇴"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/deleteMemeber"
+            android:gravity="start|center_vertical"
+            android:backgroundTint="#83EEF0F1"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+</LinearLayout>
