@@ -15,7 +15,6 @@ import com.privatememo.j.R
 import com.privatememo.j.utility.WholeImageActivity
 import com.privatememo.j.adapter.MemoViewPagerAdapter
 import com.privatememo.j.databinding.MemofragmentBinding
-import com.privatememo.j.datamodel.CategoryInfo
 import com.privatememo.j.ui.bottombar.MainActivity
 import com.privatememo.j.utility.ApplyFontModule
 import com.privatememo.j.utility.Utility

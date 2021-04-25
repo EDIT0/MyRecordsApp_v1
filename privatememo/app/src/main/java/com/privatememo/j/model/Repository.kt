@@ -2,10 +2,10 @@ package com.privatememo.j.model
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.privatememo.j.datamodel.CategoryInfo
-import com.privatememo.j.datamodel.MemoCountInfo
-import com.privatememo.j.datamodel.MemoInfo
-import com.privatememo.j.datamodel.OnlyPicInfo
+import com.privatememo.j.model.datamodel.CategoryInfo
+import com.privatememo.j.model.datamodel.MemoCountInfo
+import com.privatememo.j.model.datamodel.MemoInfo
+import com.privatememo.j.model.datamodel.OnlyPicInfo
 import com.privatememo.j.utility.Retrofit2Module
 import com.privatememo.j.utility.Utility
 import retrofit2.Call
@@ -54,27 +54,15 @@ class Repository {
                     MemoReverse()
                 }
 
-                //MemoList_items.setValue(result?.result)
                 if(result?.result != null){
                     MemoList_items_arrayList.addAll(result.result)
                     MemoList_items.setValue(MemoList_items_arrayList)
                 }
-                /*if(result?.result != null) {
-                    MemoList_items.value?.addAll(result?.result)
-                    MemoList_items.setValue(MemoList_items.value)
-                    Log.i("live","메모 더 불러오기")
-                }*/
-
-                /*for (i in 0 until result?.result?.size!!) {
-
-                    items.add(result.result.get(i))
-                }*/
 
                 if(Utility.EachMemoFloating.FloatingState == 1){
                     MemoReverse()
                 }
 
-                //switching()
             }
 
             override fun onFailure(call: Call<MemoInfo>, t: Throwable) {
@@ -123,14 +111,6 @@ class Repository {
 
                 OnlyPicList_items.setValue(result?.result)
 
-                /*for (i in 0 until result?.result?.size!!) {
-                    items.value?.add(result.result.get(i))
-                }
-
-                Utility.OnlyPicLoadMore.OnlyPicMax = items.value?.size
-                Utility.OnlyPicLoadMore.OnlyPicMid = Utility.OnlyPicLoadMore.OnlyPicMax - 6
-
-                switching()*/
             }
 
             override fun onFailure(call: Call<OnlyPicInfo>, t: Throwable) {
@@ -167,9 +147,14 @@ class Repository {
                 val result: OnlyPicInfo? = response.body()
 
                 if(result?.result != null) {
-                    OnlyPicList_items.value?.addAll(result?.result)
-                    OnlyPicList_items.setValue(OnlyPicList_items.value)
-                    Log.i("live","더보기 호출")
+                    if(end == 6){
+
+                    }
+                    else {
+                        OnlyPicList_items.value?.addAll(result?.result)
+                        OnlyPicList_items.setValue(OnlyPicList_items.value)
+                        Log.i("live", "더보기 호출")
+                    }
                 }
             }
 
@@ -205,12 +190,9 @@ class Repository {
             override fun onResponse(call: Call<MemoCountInfo>, response: Response<MemoCountInfo>) {
                 val result: MemoCountInfo? = response.body()
                 TotalConNum.setValue(Integer.parseInt(result?.MemoCount))
-                //totalConNum.value = Integer.parseInt(result?.MemoCount)
-                //Log.i("??","겟메모카운트ok ${totalConNum.value}")
             }
 
             override fun onFailure(call: Call<MemoCountInfo>, t: Throwable) {
-                //Log.i("??","겟메모카운트error")
                 TotalConNum.setValue(0)
             }
         })

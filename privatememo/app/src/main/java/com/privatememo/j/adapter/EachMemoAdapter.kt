@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.privatememo.j.api.AdapterListener
 import com.privatememo.j.databinding.EachmemoadapterBinding
-import com.privatememo.j.datamodel.MemoInfo
+import com.privatememo.j.model.datamodel.MemoInfo
 import com.privatememo.j.utility.MemberSettingModule
 import kotlinx.android.synthetic.main.eachmemoadapter.view.*
 

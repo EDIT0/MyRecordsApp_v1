@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.privatememo.j.adapter.CalendarAdapter
 import com.privatememo.j.adapter.OnlyPicAdapter
@@ -20,7 +19,7 @@ import com.privatememo.j.adapter.EachMemoAdapter
 import com.privatememo.j.adapter.SearchAdapter
 import com.privatememo.j.api.AdapterListener
 import com.privatememo.j.databinding.CategoryfragmentBinding
-import com.privatememo.j.datamodel.CategoryInfo
+import com.privatememo.j.model.datamodel.CategoryInfo
 import com.privatememo.j.ui.bottombar.MainActivity
 import com.privatememo.j.utility.ApplyFontModule
 import com.privatememo.j.utility.Utility

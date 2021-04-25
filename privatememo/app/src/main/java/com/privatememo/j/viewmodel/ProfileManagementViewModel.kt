@@ -6,7 +6,7 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.privatememo.j.datamodel.MemberProfileInfo
+import com.privatememo.j.model.datamodel.MemberProfileInfo
 import com.privatememo.j.utility.Retrofit2Module
 import retrofit2.Call
 import retrofit2.Callback

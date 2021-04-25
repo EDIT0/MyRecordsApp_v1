@@ -6,7 +6,7 @@
     <data>
         <variable
             name="OnlyPicInfo2Model"
-            type="com.privatememo.j.datamodel.OnlyPicInfo.OnlyPicInfo2" />
+            type="com.privatememo.j.model.datamodel.OnlyPicInfo.OnlyPicInfo2" />
     </data>
 
     <androidx.cardview.widget.CardView

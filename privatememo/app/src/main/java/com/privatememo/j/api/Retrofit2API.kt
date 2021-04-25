@@ -1,6 +1,6 @@
 package com.privatememo.j.api
 
-import com.privatememo.j.datamodel.*
+import com.privatememo.j.model.datamodel.*
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*

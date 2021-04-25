@@ -6,7 +6,7 @@
     <data>
         <variable
             name="CategoryInfo2Model"
-            type="com.privatememo.j.datamodel.CategoryInfo.CategoryInfo2" />
+            type="com.privatememo.j.model.datamodel.CategoryInfo.CategoryInfo2" />
     </data>
 
     <LinearLayout

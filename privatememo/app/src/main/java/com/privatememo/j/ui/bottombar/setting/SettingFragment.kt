@@ -10,7 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.privatememo.j.R
-import com.privatememo.j.datamodel.CheckPWMatching
+import com.privatememo.j.model.datamodel.CheckPWMatching
 import com.privatememo.j.ui.bottombar.MainActivity
 import com.privatememo.j.ui.login.WelcomeActivity
 import com.privatememo.j.utility.ApplyFontModule

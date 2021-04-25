@@ -1,4 +1,4 @@
-package com.privatememo.j.datamodel
+package com.privatememo.j.model.datamodel
 
 data class CategoryInfo(
     var result: ArrayList<CategoryInfo2>

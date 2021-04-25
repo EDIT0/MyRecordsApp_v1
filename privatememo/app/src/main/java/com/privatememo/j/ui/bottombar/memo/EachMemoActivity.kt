@@ -14,20 +14,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privatememo.j.R
 import com.privatememo.j.adapter.*
 import com.privatememo.j.api.AdapterListener
 import com.privatememo.j.databinding.EachmemoactivityBinding
-import com.privatememo.j.datamodel.MemoInfo
+import com.privatememo.j.model.datamodel.MemoInfo
 import com.privatememo.j.utility.ApplyFontModule
 import com.privatememo.j.utility.Utility
 import com.privatememo.j.viewmodel.EachMemoViewModel
 import kotlinx.android.synthetic.main.eachmemoactivity.*
 import kotlinx.android.synthetic.main.memofragment.backbutton
-import java.util.*
 import kotlin.collections.ArrayList
 
 

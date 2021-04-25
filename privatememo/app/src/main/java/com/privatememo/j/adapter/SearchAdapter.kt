@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.privatememo.j.api.AdapterListener
 import com.privatememo.j.databinding.SearchadapterBinding
-import com.privatememo.j.datamodel.SearchInfo
+import com.privatememo.j.model.datamodel.SearchInfo
 import com.privatememo.j.utility.MemberSettingModule
 import kotlinx.android.synthetic.main.searchadapter.view.*
 

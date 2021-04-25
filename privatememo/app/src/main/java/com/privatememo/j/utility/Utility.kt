@@ -19,10 +19,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.privatememo.j.R
 import com.privatememo.j.adapter.*
-import com.privatememo.j.datamodel.CategoryInfo
-import com.privatememo.j.datamodel.MemoInfo
-import com.privatememo.j.datamodel.OnlyPicInfo
-import com.privatememo.j.datamodel.SearchInfo
+import com.privatememo.j.model.datamodel.CategoryInfo
+import com.privatememo.j.model.datamodel.MemoInfo
+import com.privatememo.j.model.datamodel.OnlyPicInfo
+import com.privatememo.j.model.datamodel.SearchInfo
 import com.privatememo.j.model.Repository
 import java.util.*
 import kotlin.collections.ArrayList

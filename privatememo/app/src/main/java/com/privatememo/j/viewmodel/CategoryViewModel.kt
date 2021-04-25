@@ -3,7 +3,7 @@ package com.privatememo.j.viewmodel
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.privatememo.j.datamodel.CategoryInfo
+import com.privatememo.j.model.datamodel.CategoryInfo
 import com.privatememo.j.model.Repository
 import com.privatememo.j.utility.Utility
 

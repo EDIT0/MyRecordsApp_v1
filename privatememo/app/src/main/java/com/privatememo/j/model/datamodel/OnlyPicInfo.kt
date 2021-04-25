@@ -1,4 +1,4 @@
-package com.privatememo.j.datamodel
+package com.privatememo.j.model.datamodel
 
 data class OnlyPicInfo(
     var result: ArrayList<OnlyPicInfo2>

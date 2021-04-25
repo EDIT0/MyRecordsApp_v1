@@ -1,9 +1,9 @@
-package com.privatememo.j.datamodel
+package com.privatememo.j.model.datamodel
 
-data class SearchInfo(
-    var result: ArrayList<SearchInfo2>
+data class MemoInfo(
+    var result: ArrayList<MemoInfo2>
 ) {
-    data class SearchInfo2(
+    data class MemoInfo2(
             var contentnum: Int,
             var title: String,
             var memo: String,
@@ -13,9 +13,9 @@ data class SearchInfo(
             var revicetime: String,
             var ConBookmark: String,
             var memberlist_email: String,
-            var category_catenum: Int,
-            var catename: String
+            var category_catenum: Int
     ) {
+
 
         fun printDate(): String{
             var re_date = date.split("_")
@@ -46,13 +46,14 @@ data class SearchInfo(
 
         fun setVisible(): Boolean{
             if(revicedate.length > 3){
+
                 return true
             }
             else{
+
                 return false
             }
 
         }
     }
-
 }
