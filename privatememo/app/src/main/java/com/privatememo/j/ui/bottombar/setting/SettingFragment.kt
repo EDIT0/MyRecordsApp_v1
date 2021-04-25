@@ -14,7 +14,7 @@ import com.privatememo.j.model.datamodel.CheckPWMatching
 import com.privatememo.j.ui.bottombar.MainActivity
 import com.privatememo.j.ui.login.WelcomeActivity
 import com.privatememo.j.utility.ApplyFontModule
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.utility.Utility
 import kotlinx.android.synthetic.main.settingfragment.*
 import kotlinx.android.synthetic.main.settingfragment.view.*

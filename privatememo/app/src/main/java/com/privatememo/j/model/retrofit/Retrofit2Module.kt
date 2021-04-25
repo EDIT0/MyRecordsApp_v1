@@ -1,6 +1,5 @@
-package com.privatememo.j.utility
+package com.privatememo.j.model.retrofit
 
-import com.privatememo.j.api.Retrofit2API
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -16,19 +15,22 @@ class Retrofit2Module {
         private var instance: Retrofit2Module? = null
 
         @JvmStatic
-        fun getInstance(): Retrofit2Module = instance ?: synchronized(this){
-            instance ?: Retrofit2Module().also {
+        fun getInstance(): Retrofit2Module = instance
+            ?: synchronized(this){
+            instance
+                ?: Retrofit2Module().also {
                 instance = it
             }
         }
     }
 
-    fun BaseModule(): Retrofit2API{
+    fun BaseModule(): Retrofit2API {
         val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(baseurl)
                 .build()
-        val client: Retrofit2API = retrofit.create(Retrofit2API::class.java)
+        val client: Retrofit2API = retrofit.create(
+            Retrofit2API::class.java)
 
         return client
     }

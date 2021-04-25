@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.privatememo.j.R
 import com.privatememo.j.adapter.*
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.EachmemoactivityBinding
 import com.privatememo.j.model.datamodel.MemoInfo
 import com.privatememo.j.utility.ApplyFontModule

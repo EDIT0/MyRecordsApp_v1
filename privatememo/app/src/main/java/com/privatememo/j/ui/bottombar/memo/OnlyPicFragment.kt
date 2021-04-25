@@ -16,7 +16,7 @@ import com.privatememo.j.R
 import com.privatememo.j.adapter.CategoryAdapter
 import com.privatememo.j.adapter.EachMemoAdapter
 import com.privatememo.j.adapter.SearchAdapter
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.OnlypicfragmentBinding
 import com.privatememo.j.model.datamodel.OnlyPicInfo
 import com.privatememo.j.ui.bottombar.MainActivity

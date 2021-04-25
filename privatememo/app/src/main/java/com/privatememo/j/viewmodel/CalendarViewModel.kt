@@ -5,23 +5,31 @@ import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.privatememo.j.model.Repository
+import com.privatememo.j.model.datamodel.CategoryInfo
 import com.privatememo.j.model.datamodel.MemoInfo
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
+import com.privatememo.j.utility.Utility
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CalendarViewModel : ViewModel() {
+class CalendarViewModel(var repository: Repository) : ViewModel() {
 
     val retrofit2module = Retrofit2Module.getInstance()
 
-    var items = ObservableArrayList<MemoInfo.MemoInfo2>()
-    var total_items = ObservableArrayList<MemoInfo.MemoInfo2>()
+    var items = ArrayList<MemoInfo.MemoInfo2>()
+    var total_items = MutableLiveData<ArrayList<MemoInfo.MemoInfo2>>()
+        get() = repository.Calendar_TotalItems
     var splitDateArray = ArrayList<List<String>>()
+
+    var list = ArrayList<String>()
+
+
     var email = ObservableField<String>()
     var controler = MutableLiveData<Boolean>()
+    var categoryToggle = MutableLiveData<Boolean>()
 
-    var CompleteGettingData = MutableLiveData<Boolean>()
     var CategoryList_catenum = ArrayList<String>()
     var CategoryList_catename = ArrayList<String>()
 
@@ -29,11 +37,10 @@ class CalendarViewModel : ViewModel() {
     var ClickedMonth = ObservableField<Int>()
     var ClickedDay =ObservableField<Int>()
 
-    var categoryToggle = MutableLiveData<Boolean>()
+
 
     init {
         controler.value = false
-        CompleteGettingData.value = false
         categoryToggle.value = false
     }
 
@@ -60,9 +67,28 @@ class CalendarViewModel : ViewModel() {
         //getCategoryList_call()
     }
 
-    fun getCalendarMemo_call(){
+    fun insertCategoryintoList(){
+        with(Utility.repositoryModule.repositorymodule){
+            if(!CategoryList_items.value.isNullOrEmpty()) {
+                for (i in 0 until CategoryList_items.value?.size!!) {
+                    CategoryList_catenum.add(CategoryList_items.value?.get(i)?.catenum!!)
+                    CategoryList_catename.add(CategoryList_items.value?.get(i)?.catename!!)
 
-        val call: Call<MemoInfo> = retrofit2module.BaseModule().getCalendarMemo(email.get().toString())
+                    list.add(CategoryList_catename.get(i))
+                }
+            }
+        }
+    }
+
+    fun setSplitDate(){
+        for(i in 0 until total_items.value?.size!!){
+            splitDateArray.add(total_items.value?.get(i)?.date?.split("_")!!)
+        }
+    }
+
+    fun getCalendarMemo_call(){
+        Utility.repositoryModule.repositorymodule.getCalendarMemo_call(email.get().toString())
+        /*val call: Call<MemoInfo> = retrofit2module.BaseModule().getCalendarMemo(email.get().toString())
 
         call.enqueue(object : Callback<MemoInfo> {
             override fun onResponse(call: Call<MemoInfo>, response: Response<MemoInfo>) {
@@ -79,15 +105,12 @@ class CalendarViewModel : ViewModel() {
                 }
 
                 CompleteGettingData.value = true
-
-                //Log.i("tag","설명 입니다. ${result?.result?.get(0)?.explanation}")
-                //Log.i("tag","싱글톤 객체: ${retrofit2module}")
             }
 
             override fun onFailure(call: Call<MemoInfo>, t: Throwable) {
                 Log.i("??","error")
             }
-        })
+        })*/
     }
 
 }

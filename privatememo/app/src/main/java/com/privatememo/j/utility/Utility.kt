@@ -77,7 +77,7 @@ object Utility {
 
     @BindingAdapter("search_rcv")
     @JvmStatic
-    fun SearchRcv (rcv: RecyclerView, items : ArrayList<SearchInfo.SearchInfo2>){
+    fun SearchRcv (rcv: RecyclerView, items : MutableLiveData<ArrayList<SearchInfo.SearchInfo2>>){
         (rcv.adapter as SearchAdapter).items = items
         rcv.adapter?.notifyDataSetChanged()
     }
@@ -94,7 +94,6 @@ object Utility {
         var EachMemoMid = 0
         var EachMemoMax = 10
         var DeleteMemoCount = 0
-        var AddMemoCount = 0
     }
 
     object EachMemoSort{
@@ -109,6 +108,7 @@ object Utility {
         var SearchMin = 0
         var SearchMid = 0
         var SearchMax = 10
+        var DeleteSearchCount = 0
     }
 
 

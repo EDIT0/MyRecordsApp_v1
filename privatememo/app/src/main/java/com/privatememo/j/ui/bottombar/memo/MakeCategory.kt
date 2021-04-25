@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.privatememo.j.R
 import com.privatememo.j.databinding.MakecategoryBinding
 import com.privatememo.j.utility.ApplyFontModule
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.viewmodel.MakeCategoryViewModel
 import kotlinx.android.synthetic.main.makecategory.backbutton
 import kotlinx.android.synthetic.main.makecategory.picture

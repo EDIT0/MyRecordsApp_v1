@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.privatememo.j.R
 import com.privatememo.j.databinding.SignupactivityBinding
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.viewmodel.SignUpViewModel
 import kotlinx.android.synthetic.main.signupactivity.*
 import retrofit2.Call

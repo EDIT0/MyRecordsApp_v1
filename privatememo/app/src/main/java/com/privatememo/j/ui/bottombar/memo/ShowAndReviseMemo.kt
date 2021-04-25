@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.privatememo.j.R
 import com.privatememo.j.databinding.ShowandrevisememoBinding
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.utility.*
 import com.privatememo.j.viewmodel.ShowAndReviseMemoViewModel
 import kotlinx.android.synthetic.main.showandrevisememo.*

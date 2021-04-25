@@ -9,7 +9,6 @@ import com.privatememo.j.utility.Utility
 
 class CategoryViewModel(var repository: Repository) : ViewModel() {
 
-    //var items = MutableLiveData<ArrayList<CategoryInfo.CategoryInfo2>>()
     var email = ObservableField<String>()
     var controler = MutableLiveData<Boolean>()
 
@@ -30,17 +29,12 @@ class CategoryViewModel(var repository: Repository) : ViewModel() {
         }
     }
 
-    /*fun search(){
-        items.value?.clear()
-        getCategoryList_call()
-    }*/
-
     fun getCategoryList_call(){
         Utility.repositoryModule.repositorymodule.getCategoryList_call(email.get().toString())
     }
 
     fun DeleteCategory(cateNum: Int, position: Int){
-        Utility.repositoryModule.repositorymodule.DeleteCategory(cateNum, position)
+        Utility.repositoryModule.repositorymodule.DeleteCategory(cateNum, position, email.get().toString())
     }
 
 

@@ -17,7 +17,7 @@ import com.privatememo.j.R
 import com.privatememo.j.adapter.CategoryAdapter
 import com.privatememo.j.adapter.EachMemoAdapter
 import com.privatememo.j.adapter.SearchAdapter
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.CategoryfragmentBinding
 import com.privatememo.j.model.datamodel.CategoryInfo
 import com.privatememo.j.ui.bottombar.MainActivity
@@ -52,19 +52,6 @@ class CategoryFragment : Fragment() {
         var layoutmanager = LinearLayoutManager(CategoryBinding.cateRcv.context)
         CategoryBinding.cateRcv.layoutManager = layoutmanager
         CategoryBinding.cateRcv.adapter = adapter
-
-
-        /*var controler = Observer<Boolean> { result ->
-            if(categoryViewModel.items.value?.size == 0){
-                CategoryBinding.layout.visibility = View.VISIBLE
-            }
-            else{
-                CategoryBinding.layout.visibility = View.INVISIBLE
-            }
-            var act = activity as MainActivity
-            act.mainViewModel.totalCateNum.value = adapter.getItemCount()
-        }
-        categoryViewModel?.controler?.observe(CategoryBinding.lifecycleOwner!!, controler)*/
 
         var items = Observer<ArrayList<CategoryInfo.CategoryInfo2>> { result ->
             //categoryViewModel.items.setValue(result)
@@ -182,9 +169,6 @@ class CategoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.i("fragment1", "onResume()")
-        //var act = activity as MainActivity
-        //act.mainViewModel.totalCateNum.value = adapter.getItemCount()
-        //act.mainViewModel.totalConNum.value = act.mainViewModel.totalConNum.value
     }
 
     override fun onPause() {

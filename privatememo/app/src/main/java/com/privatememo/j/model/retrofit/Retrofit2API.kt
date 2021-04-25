@@ -1,4 +1,4 @@
-package com.privatememo.j.api
+package com.privatememo.j.model.retrofit
 
 import com.privatememo.j.model.datamodel.*
 import okhttp3.MultipartBody

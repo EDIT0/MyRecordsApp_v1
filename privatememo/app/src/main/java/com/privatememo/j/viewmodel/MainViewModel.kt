@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.privatememo.j.model.datamodel.CategoryInfo
 import com.privatememo.j.model.Repository
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.utility.Utility
 
 class MainViewModel(var repository: Repository) : ViewModel(){
@@ -22,7 +22,7 @@ class MainViewModel(var repository: Repository) : ViewModel(){
 
     var password = String()
 
-    var items = ObservableArrayList<CategoryInfo.CategoryInfo2>()
+    //var items = ObservableArrayList<CategoryInfo.CategoryInfo2>()
 
     init {
         totalCateNum.value = 0

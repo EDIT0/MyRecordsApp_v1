@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.CategoryadapterBinding
 import com.privatememo.j.model.datamodel.CategoryInfo
 import com.privatememo.j.utility.MemberSettingModule

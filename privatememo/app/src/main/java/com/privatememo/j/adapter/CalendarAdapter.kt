@@ -2,8 +2,9 @@ package com.privatememo.j.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.CalendaradapterBinding
 import com.privatememo.j.model.datamodel.MemoInfo
 import com.privatememo.j.utility.MemberSettingModule
@@ -41,6 +42,6 @@ class CalendarAdapter : RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items.get(position))
     }
 }

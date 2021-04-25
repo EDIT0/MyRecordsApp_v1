@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.privatememo.j.model.datamodel.MemoInfo
 import com.privatememo.j.model.Repository
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.utility.Utility
 import kotlin.collections.ArrayList
 

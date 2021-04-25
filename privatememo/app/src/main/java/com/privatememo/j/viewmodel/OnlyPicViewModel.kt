@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.privatememo.j.model.datamodel.OnlyPicInfo
 import com.privatememo.j.model.Repository
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.utility.Utility
 
 class OnlyPicViewModel(var repository: Repository) : ViewModel(){

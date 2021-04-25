@@ -2,11 +2,8 @@ package com.privatememo.j.model
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.privatememo.j.model.datamodel.CategoryInfo
-import com.privatememo.j.model.datamodel.MemoCountInfo
-import com.privatememo.j.model.datamodel.MemoInfo
-import com.privatememo.j.model.datamodel.OnlyPicInfo
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.datamodel.*
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import com.privatememo.j.utility.Utility
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,6 +31,75 @@ class Repository {
     var OnlyPicList_items = MutableLiveData<ArrayList<OnlyPicInfo.OnlyPicInfo2>>()
     var MemoList_items = MutableLiveData<ArrayList<MemoInfo.MemoInfo2>>()
     var MemoList_items_arrayList = ArrayList<MemoInfo.MemoInfo2>()
+    var SearchList_items = MutableLiveData<ArrayList<SearchInfo.SearchInfo2>>()
+    var SearchList_items_arrayList = ArrayList<SearchInfo.SearchInfo2>()
+    var Calendar_TotalItems = MutableLiveData<ArrayList<MemoInfo.MemoInfo2>>()
+
+
+
+
+    fun getCalendarMemo_call(email: String){
+
+        val call: Call<MemoInfo> = retrofit2module.BaseModule().getCalendarMemo(email)
+
+        call.enqueue(object : Callback<MemoInfo> {
+            override fun onResponse(call: Call<MemoInfo>, response: Response<MemoInfo>) {
+                val result: MemoInfo? = response.body()
+
+                if(!result?.result.isNullOrEmpty()){
+                    Calendar_TotalItems.setValue(result?.result)
+                }
+                else{
+                    Calendar_TotalItems.setValue(null)
+                }
+
+                Log.i("live","캘린더 토탈아이템")
+            }
+
+            override fun onFailure(call: Call<MemoInfo>, t: Throwable) {
+                Log.i("??","error")
+            }
+        })
+    }
+
+
+
+
+    fun getSearchResult_call(email: String, keyword: String, start:Int, end: Int){
+
+        val call: Call<SearchInfo> = retrofit2module.BaseModule().getSearchResult(email, keyword, start, end)
+
+        call.enqueue(object : Callback<SearchInfo> {
+            override fun onResponse(call: Call<SearchInfo>, response: Response<SearchInfo>) {
+                val result: SearchInfo? = response.body()
+
+                if(result?.result != null){
+                    SearchList_items_arrayList.addAll(result?.result)
+                    SearchList_items.setValue(SearchList_items_arrayList)
+                }
+            }
+
+            override fun onFailure(call: Call<SearchInfo>, t: Throwable) {
+                Log.i("??","error")
+            }
+        })
+    }
+
+
+    fun deleteMemoInSearch_call(position: Int){
+        val call: Call<String> = retrofit2module.BaseModule().DeleteMemo(SearchList_items.value?.get(position)!!.contentnum)
+
+        SearchList_items_arrayList.removeAt(position)
+        SearchList_items.setValue(SearchList_items_arrayList)
+
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                val result: String? = response.body()
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+            }
+        })
+    }
 
 
 
@@ -190,10 +256,12 @@ class Repository {
             override fun onResponse(call: Call<MemoCountInfo>, response: Response<MemoCountInfo>) {
                 val result: MemoCountInfo? = response.body()
                 TotalConNum.setValue(Integer.parseInt(result?.MemoCount))
+                Log.i("live","메모갯수 찾기1 ${TotalConNum.value.toString()}")
             }
 
             override fun onFailure(call: Call<MemoCountInfo>, t: Throwable) {
                 TotalConNum.setValue(0)
+                Log.i("live","메모갯수 찾기2 ${TotalConNum.value.toString()}")
             }
         })
     }
@@ -216,7 +284,7 @@ class Repository {
         })
     }
 
-    fun DeleteCategory(cateNum: Int, position: Int){
+    fun DeleteCategory(cateNum: Int, position: Int, email: String){
         Log.i("live","삭제될 데이터: ${CategoryList_items.value?.get(position)}")
         CategoryList_items.value?.removeAt(position)
         CategoryList_items.setValue(CategoryList_items.value)
@@ -230,6 +298,7 @@ class Repository {
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.i("??","딜리트카테고리error")
+                getMemoCount_call(email)
             }
         })
     }

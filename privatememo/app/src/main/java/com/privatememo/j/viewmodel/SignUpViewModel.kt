@@ -7,7 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.privatememo.j.model.datamodel.ReturnCheck
-import com.privatememo.j.utility.Retrofit2Module
+import com.privatememo.j.model.retrofit.Retrofit2Module
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -3,8 +3,9 @@ package com.privatememo.j.adapter
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.SearchadapterBinding
 import com.privatememo.j.model.datamodel.SearchInfo
 import com.privatememo.j.utility.MemberSettingModule
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.searchadapter.view.*
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
-    var items = ArrayList<SearchInfo.SearchInfo2>()
+    var items = MutableLiveData<ArrayList<SearchInfo.SearchInfo2>>()
     lateinit var itemClick: AdapterListener
 
     inner class ViewHolder(binding : SearchadapterBinding): RecyclerView.ViewHolder(binding.root){
@@ -45,10 +46,10 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return items.value?.size?:0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(items.value?.get(position)!!)
     }
 }

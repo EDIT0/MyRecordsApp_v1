@@ -1,7 +1,6 @@
 package com.privatememo.j.ui.bottombar.calendar
 
 import android.animation.ObjectAnimator
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
@@ -12,7 +11,6 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.privatememo.j.adapter.CalendarAdapter
 import com.privatememo.j.R
@@ -20,8 +18,10 @@ import com.privatememo.j.adapter.CategoryAdapter
 import com.privatememo.j.adapter.EachMemoAdapter
 import com.privatememo.j.adapter.OnlyPicAdapter
 import com.privatememo.j.adapter.SearchAdapter
-import com.privatememo.j.api.AdapterListener
+import com.privatememo.j.listener.AdapterListener
 import com.privatememo.j.databinding.CalendarfragmentBinding
+import com.privatememo.j.model.datamodel.CategoryInfo
+import com.privatememo.j.model.datamodel.MemoInfo
 import com.privatememo.j.ui.bottombar.MainActivity
 import com.privatememo.j.ui.bottombar.memo.ShowAndReviseMemo
 import com.privatememo.j.ui.bottombar.memo.WriteMemoActivity
@@ -34,12 +34,13 @@ import sun.bob.mcalendarview.listeners.OnDateClickListener
 import sun.bob.mcalendarview.vo.DateData
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CalendarFragment : Fragment() {
 
     lateinit var CalendarBinding: CalendarfragmentBinding
-    var calendarViewModel = CalendarViewModel()
+    var calendarViewModel = CalendarViewModel(Utility.repositoryModule.repositorymodule)
     var adapter = CalendarAdapter()
 
     var dt = Date()
@@ -54,14 +55,11 @@ class CalendarFragment : Fragment() {
     var Save_ClickedMonth = 0
     var Save_ClickedDay = 0
 
-    lateinit var CalendarDialog: Dialog
-    var list = ArrayList<String>() //카테고리 리스트
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         getContext()?.getTheme()?.applyStyle(ApplyFontModule.a.FontCall(), true)
 
         CalendarBinding = DataBindingUtil.inflate(inflater, R.layout.calendarfragment, calendarfrag,false)
-        calendarViewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
+        //calendarViewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
         CalendarBinding.setLifecycleOwner(this)
         CalendarBinding.calendarViewModel = calendarViewModel
 
@@ -113,37 +111,12 @@ class CalendarFragment : Fragment() {
                 intent.putExtra("catenum", calendarViewModel.CategoryList_catenum.get(position).toString())
                 intent.putExtra("calendarDate", "${calendarViewModel.ClickedYear.get()}_${calendarViewModel.ClickedMonth.get()}_${calendarViewModel.ClickedDay.get()}")
                 startActivityForResult(intent, 0)
-                //CalendarDialog.dismiss()//구역
 
                 calendarViewModel.categoryToggle.value = false
             }
         })
-        val ChangeTextSizeTitle_adapter: ArrayAdapter<String> = ArrayAdapter<String>(CalendarBinding.root.context, android.R.layout.simple_list_item_1, list)
+        val ChangeTextSizeTitle_adapter: ArrayAdapter<String> = ArrayAdapter<String>(CalendarBinding.root.context, android.R.layout.simple_list_item_1, calendarViewModel.list)
         CalendarBinding.categorylistView.setAdapter(ChangeTextSizeTitle_adapter)
-
-        //구역
-        /*CalendarDialog = Dialog(CalendarBinding.root.context)
-        CalendarDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        CalendarDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        CalendarDialog.setContentView(R.layout.calendarfloatingcustomdialog);
-        var params: WindowManager.LayoutParams = CalendarDialog?.getWindow()?.getAttributes()!!
-        params.width = 800
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT
-        CalendarDialog?.getWindow()?.setAttributes(params)*/
-
-        //구역
-        /*var listview = CalendarDialog.findViewById<ListView>(R.id.CateListView) //커스텀 다이얼로그 리스트뷰
-        //구역
-        listview.setOnItemClickListener(object : AdapterView.OnItemClickListener {
-            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                var intent = Intent(context, WriteMemoActivity::class.java)
-                intent.putExtra("email", calendarViewModel.email.get().toString())
-                intent.putExtra("catenum", calendarViewModel.CategoryList_catenum.get(position).toString())
-                intent.putExtra("calendarDate", "${calendarViewModel.ClickedYear.get()}_${calendarViewModel.ClickedMonth.get()}_${calendarViewModel.ClickedDay.get()}")
-                startActivityForResult(intent, 0)
-                CalendarDialog.dismiss()
-            }
-        })*/
 
         var act = activity as MainActivity
         Log.i("tag","이것은 캘린더의 이메일입니다. ${act.mainViewModel.email.value}")
@@ -153,26 +126,12 @@ class CalendarFragment : Fragment() {
         CalendarBinding.calendarRcv.layoutManager = layoutmanager
         CalendarBinding.calendarRcv.adapter = adapter
 
-
-        for (i in 0 until act.mainViewModel.items.size) {
-            calendarViewModel.CategoryList_catenum.add(act.mainViewModel.items.get(i).catenum)
-            calendarViewModel.CategoryList_catename.add(act.mainViewModel.items.get(i).catename)
-
-            list.add(calendarViewModel.CategoryList_catename.get(i))
-        }
-        //구역
-        /*Log.i("tag", "사이즈: ${calendarViewModel.CategoryList_catename.size} / ${calendarViewModel.CategoryList_catenum.size}")
-        val category_adapter: ArrayAdapter<String> = ArrayAdapter<String>(CalendarBinding.root.context, android.R.layout.simple_list_item_1, list)
-        listview.setAdapter(category_adapter)*/
-
-
-
-
+        calendarViewModel.insertCategoryintoList() //메뉴에 카테고리 넣기
 
         CalendarBinding.fabMain.setOnClickListener( object : View.OnClickListener {
             override fun onClick(v: View?) {
                 if(CalendarBinding.datetext.getText() != "선택된 날짜"){
-                    if(list.isEmpty()){
+                    if(calendarViewModel.list.isEmpty()){
                         Toast.makeText(context,"카테고리를 만들어주세요.",Toast.LENGTH_SHORT).show()
                     }
                     else{
@@ -182,52 +141,35 @@ class CalendarFragment : Fragment() {
                 else{
                     Toast.makeText(context,"날짜를 선택해주세요.",Toast.LENGTH_SHORT).show()
                 }
-                //구역
-                /*if(CalendarBinding.datetext.getText() != "선택된 날짜") {
-                    Log.i("tag","${calendarViewModel.ClickedYear.get().toString().length}")
-                    if(list.isEmpty()){
-                        Toast.makeText(context,"카테고리를 만들어주세요.",Toast.LENGTH_SHORT).show()
-                    }
-                    else{
-                        showCustomDialog()
-                    }
-
-                }
-                else{
-                    Toast.makeText(context,"날짜를 선택해주세요.",Toast.LENGTH_SHORT).show()
-                }*/
             }
         })
 
         calendarViewModel.getCalendarMemo_call() //모든 메모 불러오기
 
 
-        var controler = Observer<Boolean> { result ->
-            if(calendarViewModel.items.size == 0){
-                CalendarBinding.layout.visibility = View.VISIBLE
-            }
-            else{
-                CalendarBinding.layout.visibility = View.INVISIBLE
-            }
-        }
-        calendarViewModel?.controler?.observe(CalendarBinding.lifecycleOwner!!, controler)
+        var total_items = Observer<ArrayList<MemoInfo.MemoInfo2>> { result ->
 
-        var CompleteGettingData = Observer<Boolean> { result ->
-            if(calendarViewModel.CompleteGettingData.value == true) {
-                for (i in 0 until calendarViewModel.total_items.size) {
+            CalendarBinding.calendarView.markedDates.removeAdd()
+            calendarViewModel.items.clear()
+            calendarViewModel.splitDateArray.clear()
+            calendarViewModel.switching()
+
+            try {
+                calendarViewModel.setSplitDate()
+                Log.i("live", "포문 시작 ${calendarViewModel.total_items.value?.size!!}")
+                for (i in 0 until calendarViewModel.total_items.value?.size!!) {
                     var year = Integer.parseInt(calendarViewModel.splitDateArray.get(i)[0])
                     var month = Integer.parseInt(calendarViewModel.splitDateArray.get(i)[1])
                     var day = Integer.parseInt(calendarViewModel.splitDateArray.get(i)[2])
 
                     CalendarBinding.calendarView.markDate(DateData(year, month, day).setMarkStyle(MarkStyle(MarkStyle.DOT, Color.MAGENTA)))
-                    Log.i("tag", "여기 찍음, ${year} ${month} ${day} ${calendarViewModel.total_items.size}")
+                    Log.i("live", "여기 찍음, ${year} ${month} ${day} ${calendarViewModel.total_items.value?.size}")
                 }
-            }
-            else{
-
-            }
+            }catch (e:Exception){}
+            Log.i("live","캘린더 토탈 아이템 옵저버")
         }
-        calendarViewModel?.CompleteGettingData?.observe(CalendarBinding.lifecycleOwner!!, CompleteGettingData)
+        calendarViewModel?.total_items?.observe(CalendarBinding.lifecycleOwner!!, total_items)
+
 
         CalendarBinding.ToDay.setOnClickListener {
             CalendarBinding.calendarView.travelTo(DateData(Year,Month,Day))
@@ -273,44 +215,22 @@ class CalendarFragment : Fragment() {
             override fun CalendarShortClick(holder: CalendarAdapter.ViewHolder?, view: View?, position: Int) {
                 var intent = Intent(CalendarBinding.root.context, ShowAndReviseMemo::class.java)
                 var bundle = Bundle()
-                bundle.putInt("contentNum",calendarViewModel.items.get(position).contentnum)
-                bundle.putString("title",calendarViewModel.items.get(position).title)
-                bundle.putString("memo",calendarViewModel.items.get(position).memo)
-                bundle.putString("date",calendarViewModel.items.get(position).date)
-                bundle.putString("revisedate",calendarViewModel.items.get(position).revicedate)
-                bundle.putString("time",calendarViewModel.items.get(position).time)
-                bundle.putString("revisetime",calendarViewModel.items.get(position).revicetime)
-                bundle.putString("ConBookmark",calendarViewModel.items.get(position).ConBookmark)
-                bundle.putString("email",calendarViewModel.items.get(position).memberlist_email)
-                bundle.putInt("cateNum",calendarViewModel.items.get(position).category_catenum)
+                bundle.putInt("contentNum",calendarViewModel.items.get(position)!!.contentnum)
+                bundle.putString("title",calendarViewModel.items.get(position)?.title)
+                bundle.putString("memo",calendarViewModel.items.get(position)?.memo)
+                bundle.putString("date",calendarViewModel.items.get(position)?.date)
+                bundle.putString("revisedate",calendarViewModel.items.get(position)?.revicedate)
+                bundle.putString("time",calendarViewModel.items.get(position)?.time)
+                bundle.putString("revisetime",calendarViewModel.items.get(position)?.revicetime)
+                bundle.putString("ConBookmark",calendarViewModel.items.get(position)?.ConBookmark)
+                bundle.putString("email",calendarViewModel.items.get(position)?.memberlist_email)
+                bundle.putInt("cateNum",calendarViewModel.items.get(position)!!.category_catenum)
 
                 intent.putExtras(bundle)
                 startActivityForResult(intent, 153)
             }
 
         }
-
-        var calendar = Calendar.getInstance();
-
-        //CalendarBinding.calendarView.setDate(dt,true,true)
-        //set(Calendar.YEAR,3,1)
-        /*calendar.set(Calendar.MONTH,4)
-        calendar.set(Calendar.DATE, 1)*/
-
-        //calendar.set(Year,Month-1,Day-1)
-
-
-
-        //CalendarBinding.calendarView.travelTo(DateData(Year,Month,Day)) //현재 날짜로 지정
-
-        /*CalendarBinding.calendarView.markDate(Year, Month, 27)*/
-        //CalendarBinding.calendarView.markDate(DateData(Year, Month, 28).setMarkStyle(MarkStyle(MarkStyle.DOT, Color.MAGENTA)))
-        //CalendarBinding.calendarView.markDate(DateData(Year, Month, 3).setMarkStyle(MarkStyle(MarkStyle.DOT, Color.MAGENTA)))
-        //CalendarBinding.calendarView.markDate(DateData(Year, Month, 25).setMarkStyle(MarkStyle(MarkStyle.DOT, Color.MAGENTA)))
-
-
-
-        //CalendarBinding.calendarView.unMarkDate(Year, Month, 27)
 
         CalendarBinding.calendarView.setOnDateClickListener( object : OnDateClickListener(){
             override fun onDateClick(view: View?, date: DateData?) {
@@ -320,27 +240,19 @@ class CalendarFragment : Fragment() {
 
                 CalendarBinding.datetext.text = "" + calendarViewModel.ClickedYear.get() + "." + calendarViewModel.ClickedMonth.get() + "." + calendarViewModel.ClickedDay.get()
 
-                //if(CalendarBinding.calendarView.markedDates.check(DateData(Year, Month, 28))){
-
-                //}
-                //Log.i("tag","클릭 ${CalendarBinding.calendarView.markedDates.remove(date)}")
-
-                //CalendarBinding.calendarView.unMarkDate(Save_ClickedYear, Save_ClickedMonth, Save_ClickedDay)
-
-
-
                 if(CalendarBinding.calendarView.markedDates.remove(date) == true){
                     Log.i("tag","true 호출")
                     CalendarBinding.calendarView.markDate(date?.setMarkStyle(MarkStyle(MarkStyle.DOT, Color.MAGENTA)))
                     //Log.i("tag","${CalendarBinding.calendarView.markedDates.check(date)}")
 
                     calendarViewModel.items.clear()
-                    for(i in 0 until calendarViewModel.total_items.size){
+                    for(i in 0 until calendarViewModel.total_items.value?.size!!){
                         if(calendarViewModel.ClickedYear.get() == Integer.parseInt(calendarViewModel.splitDateArray.get(i)[0])
                             && calendarViewModel.ClickedMonth.get() == Integer.parseInt(calendarViewModel.splitDateArray.get(i)[1])
                             && calendarViewModel.ClickedDay.get() == Integer.parseInt(calendarViewModel.splitDateArray.get(i)[2]))
-                        calendarViewModel.items.add(calendarViewModel.total_items.get(i))
-                        Log.i("tag","이야 호출  ${calendarViewModel.total_items.get(i).title}")
+
+                            calendarViewModel.items.add(calendarViewModel.total_items.value!!.get(i))
+                        Log.i("tag","이야 호출  ${calendarViewModel.total_items.value!!.get(i).title}")
                     }
                     calendarViewModel.switching()
                     adapter.notifyDataSetChanged()
@@ -350,35 +262,16 @@ class CalendarFragment : Fragment() {
                     Log.i("tag","false 호출")
                     calendarViewModel.switching()
                 }
-                //Log.i("tag","${Save_ClickedYear} ${Save_ClickedMonth} ${Save_ClickedDay}")
-
 
                 Save_ClickedYear = calendarViewModel.ClickedYear.get()?:Year
                 Save_ClickedMonth = calendarViewModel.ClickedMonth.get()?:Month
                 Save_ClickedDay = calendarViewModel.ClickedDay.get()?:Day
 
-
-
-                //CalendarBinding.calendarView.markDate(Save_ClickedYear?:Year, ClickedMonth?:Month, ClickedDay?:Day)
-
             }
-
         })
-
-
-
 
         return CalendarBinding.root
     }
-
-    //구역
-    /*fun showCustomDialog(){
-        CalendarDialog.show();
-
-        CalendarDialog.findViewById<TextView>(R.id.finish).setOnClickListener {
-            CalendarDialog.dismiss()
-        }
-    }*/
 
     override fun onStart() {
         super.onStart()
@@ -400,21 +293,10 @@ class CalendarFragment : Fragment() {
         if(resultCode == 153) {
 
             Log.i("tag","153호출")
-            CalendarBinding.calendarView.markedDates.removeAdd()
-            //.calendarView.unMarkDate(calendarViewModel.ClickedYear.get()!!,calendarViewModel.ClickedMonth.get()!!,calendarViewModel.ClickedDay.get()!!)
-            //Log.i("tag",""+calendarViewModel.ClickedYear.get()!! + "/" + calendarViewModel.ClickedMonth.get()!!+"/"+calendarViewModel.ClickedDay.get()!!)
-            calendarViewModel.total_items.clear()
-            calendarViewModel.items.clear()
-            calendarViewModel.splitDateArray.clear()
-            calendarViewModel.switching()
-            calendarViewModel.CompleteGettingData.value = false
-
             calendarViewModel.getCalendarMemo_call()
         }
         else if(resultCode == 154){
             Log.i("tag","154호출")
         }
-
-
     }
 }
